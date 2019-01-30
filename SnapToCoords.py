@@ -8,9 +8,14 @@ from tqdm import tqdm
 import time
 
 
-df1 = pd.read_csv('SourceCoords.csv')
-df2 = pd.read_csv('TargetCoords.csv')
+df1 = pd.read_csv('../OrthoNormalWind/data/Matt_SPIDA_DATA.csv')
+df2 = pd.read_csv('../AdHocs/HighPrioWeatherProj113018/NC_data_snapshot.csv')
 
+source_latitude = 'Latitude'
+source_longitude= 'Longitude'
+
+target_latitude = 'lat'
+target_longitude= 'long'
 
 dfout = pd.DataFrame([])
 
@@ -26,8 +31,8 @@ def match_value(df, col1, x, col2):
 
 
 
-df1['point'] = [(x, y) for x,y in zip(df1['Centriod_LAT'], df1['Centriod_LONG'])]
-df2['point'] = [(x, y) for x,y in zip(df2['lat'], df2['lon'])]
+df1['point'] = [(x, y) for x,y in zip(df1[source_latitude], df1[source_longitude])]
+df2['point'] = [(x, y) for x,y in zip(df2[target_latitude], df2[target_longitude])]
 
 df1['closest'] = [closest_point(x, list(df2['point'])) for x in df1['point']]
 
